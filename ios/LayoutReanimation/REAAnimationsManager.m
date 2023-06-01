@@ -522,7 +522,7 @@ BOOL REANodeFind(id<RCTComponent> view, int (^block)(id<RCTComponent>))
 {
   LayoutAnimationType type = before == nil ? ENTERING : LAYOUT;
   NSNumber *viewTag = view.reactTag;
-  if (_hasAnimationForTag(viewTag, type)) {
+  if ([self hasAnimationForTag:viewTag type:type]) {
     REASnapshot *after = [[REASnapshot alloc] init:view];
     if (before == nil) {
       [self onViewCreate:view after:after];
@@ -534,7 +534,7 @@ BOOL REANodeFind(id<RCTComponent> view, int (^block)(id<RCTComponent>))
     [self setNewProps:before.values forView:view];
   }
 
-  if (_hasAnimationForTag(viewTag, SHARED_ELEMENT_TRANSITION)) {
+  if ([self hasAnimationForTag:viewTag type:SHARED_ELEMENT_TRANSITION]) {
     if (type == ENTERING) {
       [_sharedTransitionManager notifyAboutNewView:view];
     } else {
